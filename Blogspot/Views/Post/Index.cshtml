@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Post>
+
+@{
+    ViewData["Title"] = "Blog Posts";
+    
+}
+
+<div class="text-center m-3">
+    @if (ViewBag.Categories != null)
+    {
+        @foreach(var category in ViewBag.Categories)
+        {
+            <a asp-controller="post" asp-action="Index" asp-route-categoryId = "@category.Id" class="badge bg-warning">@category.Name</a>
+        }
+    }
+</div>
