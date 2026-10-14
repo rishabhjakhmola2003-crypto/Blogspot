@@ -1,0 +1,68 @@
+@model Blogspot.Models.ViewModels.EditViewModel
+
+@{
+    ViewData["Title"] = "Edit Post";
+}
+
+<div class="container" style="max-width: 1000px;">
+    <div class="d-flex justify-content-between align-items-center my-3">
+        <h2>Edit Post</h2>
+        <a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@Model.Post.Id">Cancel</a>
+    </div>
+
+    <form asp-action="Edit" asp-route-id="@Model.Post.Id" method="post" enctype="multipart/form-data">
+        <input asp-for="Post.Id" type="hidden" />
+        <input asp-for="Post.FeatureImagePath" type="hidden" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="Post.Title" class="form-label"></label>
+            <input asp-for="Post.Title" class="form-control" />
+            <span asp-validation-for="Post.Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Post.CategoryId" class="form-label"></label>
+            <select asp-for="Post.CategoryId" asp-items="Model.Categories" class="form-select">
+                <option value="">Select a category</option>
+            </select>
+            <span asp-validation-for="Post.CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Post.Author" class="form-label"></label>
+            <input asp-for="Post.Author" class="form-control" />
+            <span asp-validation-for="Post.Author" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Post.PublishedDate" class="form-label"></label>
+            <input asp-for="Post.PublishedDate" class="form-control" type="date" />
+            <span asp-validation-for="Post.PublishedDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Post.Content" class="form-label"></label>
+            <textarea asp-for="Post.Content" class="form-control" rows="12"></textarea>
+            <span asp-validation-for="Post.Content" class="text-danger"></span>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Post.FeatureImagePath))
+        {
+            <div class="mb-3">
+                <img src="@Model.Post.FeatureImagePath" alt="Current feature image" class="img-thumbnail" style="max-height: 180px;" />
+            </div>
+        }
+        <div class="mb-3">
+            <label asp-for="FeatureImage" class="form-label">Replace feature image (optional)</label>
+            <input asp-for="FeatureImage" class="form-control" type="file" accept=".jpg,.jpeg,.png,.gif" />
+            <span asp-validation-for="FeatureImage" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
