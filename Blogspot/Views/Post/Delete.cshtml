@@ -1,0 +1,26 @@
+@model Blogspot.Models.Post
+
+@{
+    ViewData["Title"] = "Delete Post";
+}
+
+<div class="container" style="max-width: 720px;">
+    <div class="card shadow-sm my-5">
+        <div class="card-body p-4">
+            <h2 class="text-danger">Delete post?</h2>
+            <p>Are you sure you want to delete <strong>@Model.Title</strong>? This action cannot be undone.</p>
+
+            <dl class="row mb-4">
+                <dt class="col-sm-3">Author</dt>
+                <dd class="col-sm-9">@Model.Author</dd>
+                <dt class="col-sm-3">Category</dt>
+                <dd class="col-sm-9">@Model.Category?.Name</dd>
+            </dl>
+
+            <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline">
+                <button type="submit" class="btn btn-danger">Yes, Delete Post</button>
+            </form>
+            <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </div>
+    </div>
+</div>
