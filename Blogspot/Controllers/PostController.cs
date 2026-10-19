@@ -172,6 +172,38 @@ namespace Blogspot.Controllers
             return RedirectToAction(nameof(Details), new { id = postFromDb.Id });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var post = await _context.Posts
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return View(post);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var post = await _context.Posts.FindAsync(id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            _context.Posts.Remove(post);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }  
+
         public JsonResult AddComment([FromBody]Comments comment)
         {
             if (comment == null || string.IsNullOrWhiteSpace(comment.Content) || comment.PostId <= 0)
