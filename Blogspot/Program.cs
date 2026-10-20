@@ -20,6 +20,13 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric = false;
 }) .AddEntityFrameworkStores<AppDbContext>();
     
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromDays(30); // Set the cookie expiration time
+    options.SlidingExpiration = true; // Enable sliding expiration
+    //options.LoginPath = "/Auth/Login"; // Set the login path
+    //options.AccessDeniedPath = "/Auth/AccessDenied"; // Set the access denied path
+});
 var app = builder.Build();
 
 
