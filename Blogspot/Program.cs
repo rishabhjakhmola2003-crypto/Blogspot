@@ -29,6 +29,34 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 var app = builder.Build();
 
+using(var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    string adminEmail = "ADMIN@gmail.com";
+    string adminPassword = "Admin@123";
+    var existingAdminRole = await roleManager.FindByNameAsync("Admin");
+
+    if(existingAdminRole == null)
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+   var existingAdminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (existingAdminUser == null)
+    {
+        var adminUser = new IdentityUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail
+        };
+        var result = await userManager.CreateAsync(adminUser, adminPassword);
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -21,7 +21,20 @@
                 </li>
                
             </ul>
-            
+
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <div class="navbar-logout">
+                    <a class="btn btn-outline-light" asp-controller="Auth" asp-action="Logout">Logout</a>
+                </div>
+            }
+            else
+            {
+                <div class="navbar-auth-buttons d-flex gap-2">
+                    <a class="btn btn-outline-light" asp-controller="Auth" asp-action="Login">Login</a>
+                    <a class="btn btn-light" asp-controller="Auth" asp-action="Register">Register</a>
+                </div>
+            }
         </div>
     </div>
 </nav>
