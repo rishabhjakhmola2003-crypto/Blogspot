@@ -69,7 +69,7 @@ namespace Blogspot.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Dogin() //checking changes conflict 
         {
             return View();
         }
