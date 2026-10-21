@@ -74,7 +74,8 @@ namespace Blogspot.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Mogin(LoginViewModel model) // This is the login action method
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model) // This is the login action method
         {
             if (ModelState.IsValid)
             {
