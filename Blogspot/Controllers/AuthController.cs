@@ -6,7 +6,7 @@ namespace Blogspot.Controllers
 {
     public class AuthController : Controller
 
-           {
+    {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -15,7 +15,7 @@ namespace Blogspot.Controllers
         //Login 
         //Logout
 
-        public AuthController(UserManager<IdentityUser> userManager , RoleManager<IdentityRole> roleManager , SignInManager<IdentityUser> signInManager)
+        public AuthController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -42,7 +42,7 @@ namespace Blogspot.Controllers
                     Email = model.Email
                 };
 
-               var result =    await _userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
@@ -82,14 +82,14 @@ namespace Blogspot.Controllers
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByEmailAsync(model.Email);
-                    if(user == null)
+                    if (user == null)
                     {
                         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                         return View(model);
 
                     }
                     var signInResult = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-                   if(!signInResult.Succeeded)
+                    if (!signInResult.Succeeded)
                     {
                         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                         return View(model);
@@ -104,5 +104,12 @@ namespace Blogspot.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Post");
+
+        }
     }
 }

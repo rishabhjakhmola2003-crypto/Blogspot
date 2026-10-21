@@ -75,9 +75,9 @@ namespace Blogspot.Controllers
                     return View(postViewModel);
                 }
               postViewModel.Post.FeatureImagePath=  await UploadFiletoFolder(postViewModel.FeatureImage);
-                 _context.Posts.AddAsync(postViewModel.Post);
-                 _context.SaveChangesAsync();
-               return RedirectToAction("Index");
+                await _context.Posts.AddAsync(postViewModel.Post);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
             postViewModel.Categories = _context.Categories.Select(c =>
                new SelectListItem
