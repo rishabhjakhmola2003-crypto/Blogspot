@@ -74,7 +74,7 @@ namespace Blogspot.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Sogin(LoginViewModel model) //changes for login disastour 
         {
             if (ModelState.IsValid)
             {
