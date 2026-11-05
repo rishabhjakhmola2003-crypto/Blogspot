@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blogspot.Models;
+using Microsoft.AspNetCore.Authorization;
 namespace Blogspot.Controllers
 {
     public class PostController : Controller
@@ -17,6 +18,7 @@ namespace Blogspot.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Index(int? categoryId)
         {
             var postsQuery = _context.Posts.Include(p => p.Category).AsQueryable();
@@ -29,7 +31,8 @@ namespace Blogspot.Controllers
             ViewBag.Categories = _context.Categories.ToList();
             return View(posts);
         }
-
+        [HttpGet]
+        
         public IActionResult Details(int id)
         {
             if(id==null)
@@ -48,6 +51,7 @@ namespace Blogspot.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
           {
             var postViewModel = new PostViewModel();
@@ -202,8 +206,8 @@ namespace Blogspot.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
-        }  
-
+        }
+        [Authorize]
         public JsonResult AddComment([FromBody]Comments comment)
         {
             if (comment == null || string.IsNullOrWhiteSpace(comment.Content) || comment.PostId <= 0)

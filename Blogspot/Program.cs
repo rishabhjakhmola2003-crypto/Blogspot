@@ -21,7 +21,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 }) .AddEntityFrameworkStores<AppDbContext>();
     
 builder.Services.ConfigureApplicationCookie(options =>
-{
+{   options.AccessDeniedPath = "/Auth/AccessDenied"; // Set the access denied path
+    options.LoginPath = "/Auth/Login"; // Set the login path
     options.ExpireTimeSpan = TimeSpan.FromDays(30); // Set the cookie expiration time
     options.SlidingExpiration = true; // Enable sliding expiration
     //options.LoginPath = "/Auth/Login"; // Set the login path
@@ -32,17 +33,17 @@ var app = builder.Build();
 using(var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var _userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var _roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     string adminEmail = "ADMIN@gmail.com";
     string adminPassword = "Admin@123";
-    var existingAdminRole = await roleManager.FindByNameAsync("Admin");
+    var existingAdminRole = await _roleManager.FindByNameAsync("Admin");
 
     if(existingAdminRole == null)
     {
-        await roleManager.CreateAsync(new IdentityRole("Admin"));
+        await _roleManager.CreateAsync(new IdentityRole("Admin"));
     }
-   var existingAdminUser = await userManager.FindByEmailAsync(adminEmail);
+   var existingAdminUser = await _userManager.FindByEmailAsync(adminEmail);
     if (existingAdminUser == null)
     {
         var adminUser = new IdentityUser
@@ -50,10 +51,10 @@ using(var scope = app.Services.CreateScope())
             UserName = adminEmail,
             Email = adminEmail
         };
-        var result = await userManager.CreateAsync(adminUser, adminPassword);
+        var result = await _userManager.CreateAsync(adminUser, adminPassword);
         if (result.Succeeded)
         {
-            await userManager.AddToRoleAsync(adminUser, "Admin");
+            await _userManager.AddToRoleAsync(adminUser, "Admin");
         }
     }
 }

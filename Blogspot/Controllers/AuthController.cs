@@ -74,14 +74,17 @@ namespace Blogspot.Controllers
             return View();
         }
 
-        [HttpPost]
+
         public async Task<IActionResult> Login(LoginViewModel model) // This is the login action method
+
         {
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, false);
                 if (result.Succeeded)
                 {
+
+                    
                     var user = await _userManager.FindByEmailAsync(model.Email);
                     if (user == null)
                     {
@@ -111,6 +114,13 @@ namespace Blogspot.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Post");
 
+        }
+
+        [HttpGet]
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
