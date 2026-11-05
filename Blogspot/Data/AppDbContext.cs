@@ -28,7 +28,7 @@ namespace Blogspot.Data
                 Title = "Tech Post 1",
                 Content = "Content of Tech Post 1",
                 Author = "John Doe",
-                PublishedDate = new DateTime(2023, 1, 1), // Static date instead of DateTime.Now
+                PublishedDate = new DateTime(2023, 1, 1, 0, 0, 0, DateTimeKind.Utc), // Static UTC date instead of DateTime.Now
                 CategoryId = 1,
                 FeatureImagePath = "tech_image.jpg", // Sample image path
             },
@@ -38,7 +38,7 @@ namespace Blogspot.Data
                     Title = "Health Post 1",
                     Content = "Content of Health Post 1",
                     Author = "Jane Doe",
-                    PublishedDate = new DateTime(2023, 1, 1), // Static date
+                    PublishedDate = new DateTime(2023, 1, 1, 0, 0, 0, DateTimeKind.Utc), // Static UTC date
                     CategoryId = 2,
                     FeatureImagePath = "health_image.jpg", // Sample image path
                 },
@@ -48,7 +48,7 @@ namespace Blogspot.Data
                     Title = "Lifestyle Post 1",
                     Content = "Content of Lifestyle Post 1",
                     Author = "Alex Smith",
-                    PublishedDate = new DateTime(2023, 1, 1), // Static date
+                    PublishedDate = new DateTime(2023, 1, 1, 0, 0, 0, DateTimeKind.Utc), // Static UTC date
                     CategoryId = 3,
                     FeatureImagePath = "lifestyle_image.jpg", // Sample image path
                 });
