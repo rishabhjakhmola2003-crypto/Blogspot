@@ -15,7 +15,7 @@
 
     }
 </div>
-@if (User.IsInRole("Admin"))
+@if (User.IsInRole("User"))
 {
     <div class="accordion text-end my-2 ">
         <a class="btn btn-primary" asp-controller="post" asp-action="Create">Create New Post</a>
