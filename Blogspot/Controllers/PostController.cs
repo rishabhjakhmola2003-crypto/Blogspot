@@ -51,7 +51,7 @@ namespace Blogspot.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Create()
           {
             var postViewModel = new PostViewModel();
