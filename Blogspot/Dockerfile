@@ -19,3 +19,6 @@ EXPOSE 10000
 ENTRYPOINT ["dotnet", "Blogspot.dll"]
 
 RUN grep -RniE 'Downloads|bootstrap\.min\.css' . --exclude-dir=.git --exclude-dir=bin --exclude-dir=obj || true
+
+
+RUN dotnet publish "Blogspot.csproj" -c Release -o /app/publish /p:UseAppHost=false
