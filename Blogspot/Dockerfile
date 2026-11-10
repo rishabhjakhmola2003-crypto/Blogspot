@@ -17,3 +17,5 @@ ENV ASPNETCORE_HTTP_PORTS=10000
 EXPOSE 10000
 
 ENTRYPOINT ["dotnet", "Blogspot.dll"]
+
+RUN grep -RniE 'Downloads|bootstrap\.min\.css' . --exclude-dir=.git --exclude-dir=bin --exclude-dir=obj || true
